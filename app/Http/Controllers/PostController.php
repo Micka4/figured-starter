@@ -46,7 +46,13 @@ class PostController extends Controller
 
     public function update(Request $request)
     {
+        if (!Auth::check()) {
+            abort(401, 'You need to be a connected user to update a Post');
+        }
         $post = Post::find($request->_id);
+        if ($post->user_id !== Auth::id()) {
+            abort(403, 'You are not authorised to update this Post ');
+        }
         $post->title = $request->title;
         $post->body = $request->body;
         $post->save();
