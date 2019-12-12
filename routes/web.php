@@ -18,3 +18,11 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::prefix('post')->group(function () {
+    Route::get('', 'PostController@index');
+    Route::get('/{slug}', 'PostController@get');
+    Route::post('', 'PostController@create');
+    Route::delete('/{id}', 'PostController@delete');
+    Route::put('/{id}', 'PostController@update');
+});
